@@ -1,0 +1,11 @@
+sort1 uses: Bubble
+
+How do you know?: shorter running time than sort 1
+
+sort2 uses: Merge
+
+How do you know?: Fastest to run data
+
+sort3 uses: Selection
+
+How do you know?: minimal difference in time to run both sorted and reversed data

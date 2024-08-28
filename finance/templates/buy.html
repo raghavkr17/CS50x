@@ -1,5 +1,3 @@
-<!-- buy.html -->
-
 {% extends "layout.html" %}
 
 {% block title %}
@@ -19,7 +17,7 @@
     </form>
 
     <!-- Display the transaction summary if a purchase was made -->
-    {% if shares %}
+    {% if stock_price %}
     <h2>Purchase Summary</h2>
     <p>You bought {{ shares }} shares of {{ symbol }} at ${{ stock_price }} per share.</p>
     <p>Total cost: ${{ total_price }}.</p>

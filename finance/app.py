@@ -105,8 +105,8 @@ def buy():
             db.execute("INSERT INTO portfolio (user_id, symbol, shares, price, name, type) VALUES (?, ?, ?, ?, ?, ?)",
                        user_id, symbol, shares, stock_price, stock_name, 'buy')
 
-        # Redirect to index where cash balance will be displayed
-        return redirect("/")
+        # Redirect to buy page with summary
+        return render_template("buy.html", symbol=symbol, shares=shares, stock_price=stock_price, total_price=total_price, cash=new_cash_balance)
 
     else:
         return render_template("buy.html")

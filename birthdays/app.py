@@ -1,5 +1,7 @@
+import os
+
 from cs50 import SQL
-from flask import Flask, flash, jsonify, redirect, render_template, request, session
+from flask import Flask, redirect, render_template, request, session
 
 # Configure application
 app = Flask(__name__)
@@ -20,23 +22,89 @@ def after_request(response):
     return response
 
 
+def is_valid_date(month, day):
+    """Validate date day is valid for month"""
+
+    month_days = [31, 29, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31]
+    return (1 <= month-1 <= 12 and 1 <= day <= month_days[month-1])
+
+
+def validate_form_data(name, month, day):
+    """Validate the form data"""
+
+    if not name or not month or not day:
+        message = 'Please provide a value for'
+        if not name:
+            message += ' "name"'
+        if not month:
+            message += ' "month"'
+        if not day:
+            message += ' "day"'
+        return message
+
+    try:
+        month = int(month)
+    except ValueError:
+        message = 'There was a problem reading "month" value'
+        return message
+    try:
+        day = int(day)
+    except ValueError:
+        message = 'There was a problem reading "day" value'
+        return message
+
+    if not is_valid_date(month, day):
+        message = f'Provided date "{month}/{day}" is not valid'
+        return message
+
+
 @app.route("/", methods=["GET", "POST"])
 def index():
+    """Load index page or add a birthday to the table"""
+
     if request.method == "POST":
 
-        # Add the user's entry into the database
-        first_name = request.form.get("first_name")
-        last_name = request.form.get("last_name")
-        day = request.form.get("day")
+        name = request.form.get("name")
         month = request.form.get("month")
-        year = request.form.get("year")
+        day = request.form.get("day")
 
-        db.execute("INSERT INTO birthdays (first_name, last_name, day, month, year) VALUES (?, ?, ?, ?, ?)", first_name, last_name, day, month, year)
+        error_message = validate_form_data(name, month, day)
+        if error_message:
+            return render_template("error.html", message=error_message)
+
+        db.execute(
+            "INSERT INTO birthdays (name, month, day) VALUES(?, ?, ?)", name, month, day)
 
         return redirect("/")
 
-    else:
-        # Display the entries in the database on index.html
-        birthdays = db.execute("SELECT * FROM birthdays")
+    birthday_list = db.execute("SELECT * FROM birthdays")
+    return render_template("index.html", birthdays=birthday_list)
 
-        return render_template("index.html", birthdays=birthdays)
+
+@app.route("/delete", methods=["POST"])
+def delete_birthday():
+    """Delete a birthday from the table"""
+
+    id = request.form.get("id")
+    if id:
+        db.execute("DELETE FROM birthdays WHERE id = ?", id)
+    return redirect("/")
+
+
+@app.route("/edit", methods=["POST"])
+def edit_birthday():
+    """Edit a birthday from the table"""
+
+    id = request.form.get("id")
+    name = request.form.get("name")
+    month = request.form.get("month")
+    day = request.form.get("day")
+
+    error_message = validate_form_data(name, month, day)
+    if error_message:
+        return render_template("error.html", message=error_message)
+
+    if id:
+        db.execute(
+            "UPDATE birthdays SET name = ?, month = ?, day = ?  WHERE id = ?", name, month, day, id)
+    return redirect("/")

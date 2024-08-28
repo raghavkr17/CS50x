@@ -1,4 +1,4 @@
-SELECT title, imdb_rating
-FROM movies
-WHERE release_year = 2010 AND imdb_rating IS NOT NULL
-ORDER BY imdb_rating DESC, title ASC;
+SELECT movies.title, ratings.rating FROM movies
+JOIN ratings ON ratings.movie_id = movies.id
+WHERE year = 2010
+ORDER BY 2 DESC, 1;

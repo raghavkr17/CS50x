@@ -1,6 +1,5 @@
-SELECT DISTINCT p.name
-FROM people p
-JOIN movie_cast mc ON p.id = mc.person_id
-JOIN movies m ON mc.movie_id = m.id
-WHERE m.release_year = 2004
-ORDER BY p.birth_year;
+SELECT DISTINCT(people.name) from stars
+JOIN people ON stars.person_id = people.id
+JOIN movies ON stars.movie_id = movies.id
+WHERE movies.year = 2004
+ORDER BY birth;

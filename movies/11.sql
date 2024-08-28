@@ -1,7 +1,7 @@
-SELECT title
-FROM movies
-JOIN movie_cast mc ON movies.id = mc.movie_id
-JOIN people p ON mc.person_id = p.id
-WHERE p.name = 'Chadwick Boseman'
-ORDER BY imdb_rating DESC
+SELECT movies.title from people
+JOIN stars ON people.id = stars.person_id
+JOIN movies ON stars.movie_id = movies.id
+JOIN ratings on movies.id = ratings.movie_id
+WHERE people.name = "Chadwick Boseman"
+ORDER BY rating DESC
 LIMIT 5;

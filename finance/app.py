@@ -109,7 +109,8 @@ def buy():
         return redirect("/")
 
     else:
-        return render_template("buy.html")
+        return render_template("buy.html", shares=shares, symbol=symbol, stock_price=stock_price, total_price=total_price, cash=new_cash_balance)
+
 
 
 @app.route("/history")

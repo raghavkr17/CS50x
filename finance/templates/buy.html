@@ -1,3 +1,5 @@
+<!-- buy.html -->
+
 {% extends "layout.html" %}
 
 {% block title %}
@@ -5,15 +7,22 @@
 {% endblock %}
 
 {% block main %}
+    <!-- Display the purchase form -->
     <form action="/buy" method="post">
         <div class="form-group">
-            <input autocomplete="off" autofocus class="form-control" name="symbol" placeholder="Symbol" type="text">
+            <input autocomplete="off" autofocus class="form-control" name="symbol" placeholder="symbol" type="text">
         </div>
         <div class="form-group">
-            <input autocomplete="off" class="form-control" name="shares" placeholder="Shares" type="number" min=1>
+            <input class="form-control" name="shares" placeholder="shares" type="text">
         </div>
         <button class="btn btn-primary" type="submit">Buy</button>
     </form>
 
-
+    <!-- Display the transaction summary if a purchase was made -->
+    {% if shares %}
+    <h2>Purchase Summary</h2>
+    <p>You bought {{ shares }} shares of {{ symbol }} at ${{ stock_price }} per share.</p>
+    <p>Total cost: ${{ total_price }}.</p>
+    <p>Your remaining balance is ${{ cash }}.</p>
+    {% endif %}
 {% endblock %}

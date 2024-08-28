@@ -59,7 +59,7 @@ def index():
         stock["price"] = items["price"]
         total += stock["totshares"] * stock["price"]
         print(total)
-    return render_template("index.html", stocks=stocks, cash=cash, total=total, usd=usd)
+    check50 cs50/problems/2024/x/finance
 
 
 @app.route("/buy", methods=["GET", "POST"])
@@ -109,8 +109,7 @@ def buy():
         return redirect("/")
 
     else:
-        return render_template("buy.html", shares=shares, symbol=symbol, stock_price=stock_price, total_price=total_price, cash=new_cash_balance)
-
+        return render_template("buy.html")
 
 
 @app.route("/history")

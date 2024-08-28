@@ -48,7 +48,8 @@ if not os.environ.get("API_KEY"):
 def index():
     """Show portfolio of stocks"""
     user_id = session["user_id"]
-    stocks = db.execute("SELECT symbol, SUM(shares) as totshares, name FROM portfolio WHERE user_id = ? GROUP BY symbol", user_id)
+    stocks = db.execute(
+        "SELECT symbol, SUM(shares) as totshares, name FROM portfolio WHERE user_id = ? GROUP BY symbol", user_id)
     cash = db.execute("SELECT cash FROM users WHERE id = ?", user_id)[0]["cash"]
 
     total = cash
@@ -111,7 +112,8 @@ def buy():
 def history():
     """Show history of transactions"""
     user_id = session["user_id"]
-    transactions = db.execute("SELECT symbol, shares, price, name, type, time FROM portfolio WHERE user_id = ?", user_id)
+    transactions = db.execute(
+        "SELECT symbol, shares, price, name, type, time FROM portfolio WHERE user_id = ?", user_id)
     return render_template("history.html", transactions=transactions, usd=usd)
 
 
@@ -268,7 +270,8 @@ def sell():
         return redirect("/")
 
     else:
-        symbols = db.execute("SELECT symbol FROM portfolio WHERE user_id = ? GROUP BY symbol", user_id)
+        symbols = db.execute(
+            "SELECT symbol FROM portfolio WHERE user_id = ? GROUP BY symbol", user_id)
         print(symbols)
         return render_template("sell.html", symbols=symbols)
 

@@ -1,5 +1,6 @@
 import re
 
+
 def count_letters(text):
     letters = 0
     for char in text:
@@ -7,20 +8,24 @@ def count_letters(text):
             letters += 1
     return letters
 
+
 def count_words(text):
     words = text.split()
     return len(words)
 
+
 def count_sentences(text):
-    sentences = re.split(r'[.!?]', text)
-    sentences = [s for s in sentences if s.strip()]
+    # Improved sentence counting using regex for sentence-ending punctuation
+    sentences = re.findall(r'[.!?]+(?=\s|$)', text)
     return len(sentences)
+
 
 def coleman_liau_index(letters, words, sentences):
     L = (letters / words) * 100
     S = (sentences / words) * 100
     index = 0.0588 * L - 0.296 * S - 15.8
     return round(index)
+
 
 def main():
     text = input("Text: ")
@@ -35,6 +40,7 @@ def main():
         print("Grade 16+")
     else:
         print(f"Grade {grade}")
+
 
 if __name__ == "__main__":
     main()

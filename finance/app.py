@@ -59,7 +59,7 @@ def index():
         stock["price"] = items["price"]
         total += stock["totshares"] * stock["price"]
         print(total)
-    check50 cs50/problems/2024/x/finance
+    return render_template("index.html", stocks=stocks, cash=cash, total=total, usd=usd)
 
 
 @app.route("/buy", methods=["GET", "POST"])
@@ -70,24 +70,19 @@ def buy():
     if request.method == "POST":
         symbol = request.form.get("symbol").upper()
 
-        # Ensure stock symbol was submitted and valid
         if not symbol:
-            return apology("must provide symbol")
+            return render_template("buy.html", message="Please provide a stock symbol")
 
         stock = lookup(symbol)
         if not stock:
-            return apology("Please enter a valid stock symbol")
-
-        # Check if 'name' key exists in stock data
-        if 'name' not in stock:
-            return apology("Stock name not found")
+            return render_template("buy.html", message="Invalid stock symbol")
 
         try:
             shares = int(request.form.get("shares"))
         except:
-            return apology("enter a valid number of shares")
+            return render_template("buy.html", message="Please enter a valid number of shares")
         if shares <= 0:
-            return apology("enter a valid number of shares")
+            return render_template("buy.html", message="Number of shares must be positive")
 
         user_id = session["user_id"]
         cash = db.execute("SELECT cash FROM users WHERE id=?", user_id)[0]["cash"]
@@ -97,20 +92,16 @@ def buy():
         total_price = stock_price * shares
 
         if cash < total_price:
-            return apology("More funds required")
-        else:
-            # Update cash balance
-            new_cash_balance = cash - total_price
-            db.execute("UPDATE users SET cash = ? WHERE id = ?", new_cash_balance, user_id)
-            db.execute("INSERT INTO portfolio (user_id, symbol, shares, price, name, type) VALUES (?, ?, ?, ?, ?, ?)",
-                       user_id, symbol, shares, stock_price, stock_name, 'buy')
+            return render_template("buy.html", message="Insufficient funds to complete the purchase")
 
-        # Redirect to index where cash balance will be displayed
-        return redirect("/")
+        db.execute("UPDATE users SET cash = ? WHERE id = ?", cash - total_price, user_id)
+        db.execute("INSERT INTO portfolio (user_id, symbol, shares, price, name, type) VALUES (?, ?, ?, ?, ?, ?)",
+                   user_id, symbol, shares, stock_price, stock_name, 'buy')
+
+        return render_template("buy.html", message=f"Successfully purchased {shares} shares of {symbol}")
 
     else:
         return render_template("buy.html")
-
 
 @app.route("/history")
 @login_required

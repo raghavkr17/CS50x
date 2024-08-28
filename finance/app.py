@@ -140,11 +140,19 @@ def login():
         # Query database for username
         rows = db.execute("SELECT * FROM users WHERE username = ?", username)
 
+        # Debugging: Print the number of rows and the fetched user
+        print("Rows fetched:", len(rows))
+        print("User data:", rows)
+
         # Check if the query returned exactly one user
         if len(rows) != 1:
             return apology("invalid username and/or password", 403)
 
         user = rows[0]
+
+        # Debugging: Print the hash stored in the database and the provided password
+        print("Stored hash:", user["hash"])
+        print("Provided password:", password)
 
         # Ensure password is correct
         if not check_password_hash(user["hash"], password):

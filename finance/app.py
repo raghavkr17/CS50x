@@ -67,17 +67,20 @@ def index():
 def buy():
     """Buy shares of stock"""
 
-    # User reached route via POST (as by submitting a form via POST)
     if request.method == "POST":
-
         symbol = request.form.get("symbol").upper()
 
         # Ensure stock symbol was submitted and valid
         if not symbol:
             return apology("must provide symbol")
+
         stock = lookup(symbol)
         if not stock:
             return apology("Please enter a valid stock symbol")
+
+        # Check if 'name' key exists in stock data
+        if 'name' not in stock:
+            return apology("Stock name not found")
 
         try:
             shares = int(request.form.get("shares"))
@@ -85,7 +88,6 @@ def buy():
             return apology("enter a valid number of shares")
         if shares <= 0:
             return apology("enter a valid number of shares")
-        print(shares)
 
         user_id = session["user_id"]
         cash = db.execute("SELECT cash FROM users WHERE id=?", user_id)[0]["cash"]

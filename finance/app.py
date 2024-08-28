@@ -97,12 +97,15 @@ def buy():
         total_price = stock_price * shares
 
         if cash < total_price:
-            return apology("More fund required")
+            return apology("More funds required")
         else:
-            db.execute("UPDATE users SET cash = ? WHERE id = ?", cash - total_price, user_id)
+            # Update cash balance
+            new_cash_balance = cash - total_price
+            db.execute("UPDATE users SET cash = ? WHERE id = ?", new_cash_balance, user_id)
             db.execute("INSERT INTO portfolio (user_id, symbol, shares, price, name, type) VALUES (?, ?, ?, ?, ?, ?)",
                        user_id, symbol, shares, stock_price, stock_name, 'buy')
 
+        # Redirect to index where cash balance will be displayed
         return redirect("/")
 
     else:

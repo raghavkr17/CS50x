@@ -1,3 +1,3 @@
 SELECT AVG(rating) AS average_rating
-FROM movies, ratings
+FROM ratings, movies
 WHERE year = 2012;

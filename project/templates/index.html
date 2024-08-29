@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+    <title>Internship Finder</title>
+</head>
+<body>
+    <h1>Welcome to Internship Finder</h1>
+    <nav>
+        <ul>
+            <li><a href="{{ url_for('post') }}">Post Internship</a></li>
+            <li><a href="{{ url_for('find') }}">Find Internship</a></li>
+            <li><a href="{{ url_for('manage') }}">Manage Postings</a></li>
+        </ul>
+    </nav>
+</body>
+</html>

@@ -13,22 +13,30 @@ def get_db_connection():
 def index():
     return render_template('index.html')
 
-@app.route('/post', methods=['GET', 'POST'])
+@app.route('/post', methods=['POST'])
 def post():
-    if request.method == 'POST':
-        # Process the form submission
-        company = request.form['company']
-        position = request.form['position']
-        city = request.form['city'].lower()
+    company = request.form['company']
+    position = request.form['position']
+    city = request.form['city'].lower()
 
-        conn = get_db_connection()
-        conn.execute('INSERT INTO internships (company, position, city) VALUES (?, ?, ?)',
-                     (company, position, city))
-        conn.commit()
-        conn.close()
+    conn = get_db_connection()
+    conn.execute('INSERT INTO internships (company, position, city) VALUES (?, ?, ?)',
+                 (company, position, city))
+    conn.commit()
+    conn.close()
 
-        return redirect(url_for('index'))
-    return render_template('post.html')
+    return redirect(url_for('index'))  # Redirect back to the main page
+
+@app.route('/remove', methods=['POST'])
+def remove():
+    internship_id = request.form['internship_id']
+
+    conn = get_db_connection()
+    conn.execute('DELETE FROM internships WHERE id = ?', (internship_id,))
+    conn.commit()
+    conn.close()
+
+    return redirect(url_for('index'))  # Redirect back to the main page
 
 
 @app.route('/find', methods=['GET', 'POST'])

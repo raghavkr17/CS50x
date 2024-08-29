@@ -26,7 +26,6 @@ def post():
         conn.commit()
         conn.close()
 
-        # Redirect to the same page to refresh it
         return redirect(url_for('post'))
 
     return render_template('post.html')
@@ -50,10 +49,12 @@ def manage():
         conn.commit()
         conn.close()
 
-        # Redirect to the same page to refresh it
         return redirect(url_for('manage'))
 
     conn = get_db_connection()
     internships = conn.execute('SELECT * FROM internships').fetchall()
     conn.close()
     return render_template('manage.html', internships=internships)
+
+if __name__ == '__main__':
+    app.run(host='0.0.0.0', port=5000, debug=True)

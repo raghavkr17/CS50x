@@ -8,10 +8,23 @@ body, h1, h2, h3, p {
 }
 
 body {
-    font-family: Arial, sans-serif;
-    background-color: #f4f4f9;
-    color: #333;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #121212; /* Dark background for a sleek look */
+    color: #e0e0e0; /* Light text color for contrast */
     text-align: center;
+}
+
+header {
+    background-color: #1e1e1e; /* Slightly lighter background for header */
+    color: #ffffff;
+    padding: 20px;
+    border-bottom: 2px solid #333;
+}
+
+header h1 {
+    margin: 0;
+    font-size: 3em;
+    font-weight: bold;
 }
 
 .container {
@@ -20,34 +33,22 @@ body {
     padding: 20px;
 }
 
-header {
-    background-color: #4CAF50;
-    color: white;
-    padding: 20px;
-    border-bottom: 5px solid #45a049;
-}
-
-header h1 {
-    margin: 0;
-    font-size: 2.5em;
-}
-
 button {
-    background-color: #4CAF50;
+    background-color: #1e90ff; /* Bright color for buttons */
     color: white;
     border: none;
-    padding: 10px 20px;
+    padding: 12px 24px;
     text-align: center;
     text-decoration: none;
     display: inline-block;
-    font-size: 16px;
+    font-size: 18px;
     margin: 10px;
     cursor: pointer;
-    border-radius: 5px;
+    border-radius: 8px;
 }
 
 button:hover {
-    background-color: #45a049;
+    background-color: #4682b4; /* Slightly darker shade on hover */
 }
 
 form {
@@ -55,26 +56,28 @@ form {
 }
 
 input[type="text"], input[type="submit"] {
-    padding: 10px;
+    padding: 12px;
     margin: 5px 0;
-    border: 1px solid #ddd;
-    border-radius: 5px;
+    border: none;
+    border-radius: 8px;
+    font-size: 16px;
 }
 
 input[type="text"] {
     width: 100%;
-    max-width: 500px;
+    max-width: 600px;
+    background-color: #333;
+    color: #e0e0e0;
 }
 
 input[type="submit"] {
-    background-color: #4CAF50;
+    background-color: #1e90ff;
     color: white;
-    border: none;
     cursor: pointer;
 }
 
 input[type="submit"]:hover {
-    background-color: #45a049;
+    background-color: #4682b4;
 }
 
 table {
@@ -84,29 +87,30 @@ table {
 }
 
 table, th, td {
-    border: 1px solid #ddd;
+    border: 1px solid #333;
 }
 
 th, td {
-    padding: 10px;
+    padding: 12px;
     text-align: left;
 }
 
 th {
-    background-color: #4CAF50;
-    color: white;
+    background-color: #1e1e1e;
+    color: #ffffff;
 }
 
 tr:nth-child(even) {
-    background-color: #f2f2f2;
+    background-color: #1f1f1f;
 }
 
 footer {
-    background-color: #4CAF50;
-    color: white;
-    padding: 10px 0;
+    background-color: #1e1e1e;
+    color: #ffffff;
+    padding: 15px 0;
     position: fixed;
     bottom: 0;
     width: 100%;
     text-align: center;
+    font-size: 14px;
 }

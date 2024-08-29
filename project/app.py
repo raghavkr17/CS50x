@@ -26,7 +26,9 @@ def post():
         conn.commit()
         conn.close()
 
-        return redirect(url_for('index'))
+        # Redirect to the same page to refresh it
+        return redirect(url_for('post'))
+
     return render_template('post.html')
 
 @app.route('/find', methods=['GET', 'POST'])
@@ -47,12 +49,11 @@ def manage():
         conn.execute('DELETE FROM internships WHERE id = ?', (internship_id,))
         conn.commit()
         conn.close()
+
+        # Redirect to the same page to refresh it
         return redirect(url_for('manage'))
 
     conn = get_db_connection()
     internships = conn.execute('SELECT * FROM internships').fetchall()
     conn.close()
     return render_template('manage.html', internships=internships)
-
-if __name__ == '__main__':
-    app.run(debug=True)

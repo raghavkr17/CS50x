@@ -3,20 +3,24 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
     <title>Post Internship</title>
 </head>
 <body>
     <h1>Post a New Internship</h1>
     <form action="{{ url_for('post') }}" method="post">
-        <label for="company">Company Name:</label>
-        <input type="text" id="company" name="company" required><br><br>
+        <label for="company">Company:</label>
+        <input type="text" id="company" name="company" placeholder="Company" required><br><br>
+
         <label for="position">Position:</label>
-        <input type="text" id="position" name="position" required><br><br>
+        <input type="text" id="position" name="position" placeholder="Position" required><br><br>
+
         <label for="city">City:</label>
-        <input type="text" id="city" name="city" required><br><br>
+        <input type="text" id="city" name="city" placeholder="City" required><br><br>
+
         <button type="submit">Post Internship</button>
     </form>
-    <a href="{{ url_for('index') }}">Back to Home</a>
+
+    <br><br>
+    <a href="{{ url_for('index') }}">Back to Main Page</a>
 </body>
 </html>

@@ -16,6 +16,7 @@ def index():
 @app.route('/post', methods=['GET', 'POST'])
 def post():
     if request.method == 'POST':
+        # Process the form submission
         company = request.form['company']
         position = request.form['position']
         city = request.form['city'].lower()
@@ -28,6 +29,7 @@ def post():
 
         return redirect(url_for('index'))
     return render_template('post.html')
+
 
 @app.route('/find', methods=['GET', 'POST'])
 def find():
